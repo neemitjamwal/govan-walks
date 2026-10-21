@@ -25,11 +25,12 @@ const expectedMembership: Record<string, string[]> = {
     'clyde-tunnel',
   ],
   'isabella-elder': ['fairfield-heritage', 'elder-park-library', 'isabella-elder-mural', 'elder-park', 'elder-cottage-hospital'],
+  'under-the-clyde': ['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel'],
 };
 
 describe('walks', () => {
-  it('has exactly the three walks', () => {
-    expect(walks.map((w) => w.slug)).toEqual(['ancient-govan', 'the-yards', 'isabella-elder']);
+  it('has exactly the four walks', () => {
+    expect(walks.map((w) => w.slug)).toEqual(['ancient-govan', 'the-yards', 'isabella-elder', 'under-the-clyde']);
   });
 
   it.each(walks.map((w) => [w.slug, w] as const))('%s keeps its agreed stop membership', (slug, walk) => {
@@ -69,6 +70,12 @@ describe('walks', () => {
     expect(km('isabella-elder')).toBeGreaterThan(0.3);
     expect(km('isabella-elder')).toBeLessThan(2);
     expect(walkStats(getWalk('isabella-elder')!).stopCount).toBe(5);
+    expect(km('under-the-clyde')).toBeGreaterThan(0.6);
+    expect(km('under-the-clyde')).toBeLessThan(2);
+  });
+
+  it('under-the-clyde finishes at the Clyde Tunnel', () => {
+    expect(getWalk('under-the-clyde')!.stops).toEqual(['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel']);
   });
 
   it('the-yards and isabella-elder run as westward routes along the south bank', () => {

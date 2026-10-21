@@ -53,6 +53,14 @@ export const walks: Walk[] = [
       "Start at the offices of Fairfield, the shipyard of John Elder that made Govan world-famous, then follow Isabella Elder's gifts to Govan: the library Andrew Carnegie opened in 1903 on her condition that it open on Sundays, the park she gave in 1885, and the hospital whose wards she named after Sophia Jex-Blake and Florence Nightingale. On the way, a mural on a Langlands Road tenement sets her profile beside the library she paid for.",
     stops: ['fairfield-heritage', 'elder-park-library', 'isabella-elder-mural', 'elder-park', 'elder-cottage-hospital'],
   },
+  {
+    slug: 'under-the-clyde',
+    name: 'Under the Clyde',
+    theme: 'Fairfield, the yards and Linthouse, then a walk under the River Clyde itself.',
+    intro:
+      'Start at the Fairfield offices, the red sandstone palace built between 1888 and 1891, and walk west past the yard next door, where ships are still built on the very same site. Carry on to Linthouse, where Alexander Stephen & Sons built their engine shop in 1872, then finish at the Clyde Tunnel. Under its road decks run separate pedestrian and cycle tunnels: ten minutes on foot, a couple by bike, under the River Clyde itself.',
+    stops: ['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel'],
+  },
 ];
 
 export function getWalk(slug: string): Walk | undefined {
