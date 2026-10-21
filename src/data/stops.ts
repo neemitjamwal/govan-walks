@@ -25,6 +25,24 @@ export interface Stop extends LatLng {
   thenUnavailable?: string;
 }
 
+const OS_SIX_INCH = {
+  source: 'os6-lanark-1863',
+  caption: 'Ordnance Survey six-inch map, Lanarkshire Sheet 6, published 1863–65. The ring marks where this stop is today.',
+  credit: 'Public domain · scan via British History Online / Wikimedia Commons',
+  creditUrl: 'https://commons.wikimedia.org/wiki/File:Map_of_Lanarkshire_Sheet_006,_Ordnance_Survey,_1863-1865.jpg',
+} as const;
+
+const BARTHOLOMEW_1882 = {
+  source: 'bartholomew-1882',
+  caption: 'John Bartholomew, New Plan of Glasgow with suburbs, 1882. The ring marks where this stop is today.',
+  credit: 'Public domain · Bibliothèque nationale de France (Gallica) via Wikimedia Commons',
+  creditUrl:
+    'https://commons.wikimedia.org/wiki/File:New_Plan_of_Glasgow_with_suburbs_from_Ordnance_and_actual_surveys,_constructed_for_the_post_office_-_directory_by_John_Bartholomew..._-_btv1b53239419r.jpg',
+} as const;
+
+// Which scan each crop comes from is decided in scripts/then-config.json; tests/then-crops.test.ts keeps the two in step.
+const thenFrom = (map: typeof OS_SIX_INCH | typeof BARTHOLOMEW_1882, slug: string): ThenPicture => ({ src: `/then/${slug}.webp`, ...map });
+
 export const stops: Stop[] = [
   {
     slug: "govan-cross",
@@ -56,7 +74,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86265,
     lng: -4.31115,
-    coordNote: "OSM node 5574776483 (Mary Barbour Statue, 55.86261,-4.31107) and Govan subway entrances (OSM node 5862364618); Atlas point (55.8628,-4.3117) was ~45 m north-west on the Govan Road junction. Moved to the public square beside the statue with the station entrance in view."
+    coordNote: "OSM node 5574776483 (Mary Barbour Statue, 55.86261,-4.31107) and Govan subway entrances (OSM node 5862364618); Atlas point (55.8628,-4.3117) was ~45 m north-west on the Govan Road junction. Moved to the public square beside the statue with the station entrance in view.",
+    then: thenFrom(OS_SIX_INCH, "govan-cross"),
   },
   {
     slug: "doomster-hill",
@@ -92,7 +111,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86372,
     lng: -4.31078,
-    coordNote: "Site built over; no OSM feature. Canmore position 55.86365,-4.31051 (+/-100 m) is on private ground of the new Water Row housing. Walk point is the nearest point on the public street Water Row (OSM way 48464395), ~22 m west of the Canmore position. (Paved footways in the housing, OSM way 1535204332, pass ~10 m away but were not used.)"
+    coordNote: "Site built over; no OSM feature. Canmore position 55.86365,-4.31051 (+/-100 m) is on private ground of the new Water Row housing. Walk point is the nearest point on the public street Water Row (OSM way 48464395), ~22 m west of the Canmore position. (Paved footways in the housing, OSM way 1535204332, pass ~10 m away but were not used.)",
+    then: thenFrom(OS_SIX_INCH, "doomster-hill"),
   },
   {
     slug: "water-row",
@@ -124,7 +144,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86398,
     lng: -4.31045,
-    coordNote: "OSM way 48464395 (Water Row). Atlas point (55.8646,-4.3105) was ~70 m north, past the end of the street. Moved onto Water Row near its river end, beside the gate to the riverside path (OSM node 8027022913)."
+    coordNote: "OSM way 48464395 (Water Row). Atlas point (55.8646,-4.3105) was ~70 m north, past the end of the street. Moved onto Water Row near its river end, beside the gate to the riverside path (OSM node 8027022913).",
+    then: thenFrom(OS_SIX_INCH, "water-row"),
   },
   {
     slug: "govan-ferry",
@@ -156,7 +177,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86438,
     lng: -4.31003,
-    coordNote: "Ferry pontoon is not mapped in OSM; Atlas point (55.8652,-4.3098) was in the river. Moved to the riverside path at the foot of the Water Row steps (OSM way 1313952448 steps, way 1313952449 path start), the public riverbank at the Water Row end."
+    coordNote: "Ferry pontoon is not mapped in OSM; Atlas point (55.8652,-4.3098) was in the river. Moved to the riverside path at the foot of the Water Row steps (OSM way 1313952448 steps, way 1313952449 path start), the public riverbank at the Water Row end.",
+    then: thenFrom(OS_SIX_INCH, "govan-ferry"),
   },
   {
     slug: "govan-partick-bridge",
@@ -188,7 +210,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.864526,
     lng: -4.309356,
-    coordNote: "OSM way 1231763104 (Govan-Partick Bridge, swing span, foot=designated), mid-span point; bridge outline OSM way 1512773029. Atlas point (55.8655,-4.3090) was ~110 m north, beyond the bridge in the river."
+    coordNote: "OSM way 1231763104 (Govan-Partick Bridge, swing span, foot=designated), mid-span point; bridge outline OSM way 1512773029. Atlas point (55.8655,-4.3090) was ~110 m north, beyond the bridge in the river.",
+    then: thenFrom(OS_SIX_INCH, "govan-partick-bridge"),
   },
   {
     slug: "old-govan-walkway",
@@ -220,7 +243,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86525,
     lng: -4.312659,
-    coordNote: "Riverside path north of Govan Old: junction of OSM ways 1313952449 and 898486541 (paths from Water Row towards Wanlock Street, way 1314380445). Atlas point (55.865,-4.3125) was ~30 m south on the churchyard edge; moved onto the path."
+    coordNote: "Riverside path north of Govan Old: junction of OSM ways 1313952449 and 898486541 (paths from Water Row towards Wanlock Street, way 1314380445). Atlas point (55.865,-4.3125) was ~30 m south on the churchyard edge; moved onto the path.",
+    then: thenFrom(OS_SIX_INCH, "old-govan-walkway"),
   },
   {
     slug: "govan-old-church",
@@ -263,7 +287,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.864372,
     lng: -4.312854,
-    coordNote: "OSM way 49859412 (Govan Old Parish Church, centroid 55.86460,-4.31300) and node 12920194973 (The Govan Stones). Atlas point (55.8641,-4.3128) was ~30 m south. Walk point is on the path round the church (OSM way 898486544) at its south-east corner."
+    coordNote: "OSM way 49859412 (Govan Old Parish Church, centroid 55.86460,-4.31300) and node 12920194973 (The Govan Stones). Atlas point (55.8641,-4.3128) was ~30 m south. Walk point is on the path round the church (OSM way 898486544) at its south-east corner.",
+    then: thenFrom(OS_SIX_INCH, "govan-old-church"),
   },
   {
     slug: "govan-graving-docks",
@@ -295,7 +320,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.85995,
     lng: -4.30225,
-    coordNote: "OSM ways 27012765, 27012748, 27011787 (Govan Graving Docks 1-3, fenced, no public access). Atlas point (55.8633,-4.3000) was ~370 m north on the Clydeside Expressway/river. Moved to the Govan Road pavement (OSM way 255159951, sidewalk=both) beside the head of Dock 3, near Stag Street."
+    coordNote: "OSM ways 27012765, 27012748, 27011787 (Govan Graving Docks 1-3, fenced, no public access). Atlas point (55.8633,-4.3000) was ~370 m north on the Clydeside Expressway/river. Moved to the Govan Road pavement (OSM way 255159951, sidewalk=both) beside the head of Dock 3, near Stag Street.",
+    then: thenFrom(BARTHOLOMEW_1882, "govan-graving-docks"),
   },
   {
     slug: "pearce-statue",
@@ -327,7 +353,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.863313,
     lng: -4.312881,
-    coordNote: "OSM node 1558524726 (Sir William Pearce memorial), on the south side of Govan Road. Atlas point (55.8634,-4.3122) was ~45 m east; OSM position used as is (public pavement at Govan Cross)."
+    coordNote: "OSM node 1558524726 (Sir William Pearce memorial), on the south side of Govan Road. Atlas point (55.8634,-4.3122) was ~45 m east; OSM position used as is (public pavement at Govan Cross).",
+    then: thenFrom(OS_SIX_INCH, "pearce-statue"),
   },
   {
     slug: "pearce-institute",
@@ -359,7 +386,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8634,
     lng: -4.3124,
-    coordNote: "OSM way 48464206 (The Pearce Institute, centroid 55.86363,-4.31261) with entrance node 9176498624 on Govan Road. Atlas point (55.8636,-4.3128) fell inside the building; moved ~35 m to the Govan Road pavement at the entrance (kept just over 30 m from the Pearce statue)."
+    coordNote: "OSM way 48464206 (The Pearce Institute, centroid 55.86363,-4.31261) with entrance node 9176498624 on Govan Road. Atlas point (55.8636,-4.3128) fell inside the building; moved ~35 m to the Govan Road pavement at the entrance (kept just over 30 m from the Pearce statue).",
+    then: thenFrom(OS_SIX_INCH, "pearce-institute"),
   },
   {
     slug: "st-anthonys-church",
@@ -391,7 +419,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86368,
     lng: -4.31445,
-    coordNote: "OSM way 49860134 (St Anthony's RC Church, 2 Harmony Row, centroid 55.86350,-4.31446). Atlas point (55.8635,-4.3144) was inside the building; moved ~20 m north to the Govan Road pavement in front of the church."
+    coordNote: "OSM way 49860134 (St Anthony's RC Church, 2 Harmony Row, centroid 55.86350,-4.31446). Atlas point (55.8635,-4.3144) was inside the building; moved ~20 m north to the Govan Road pavement in front of the church.",
+    then: thenFrom(OS_SIX_INCH, "st-anthonys-church"),
   },
   {
     slug: "lyceum-cinema",
@@ -423,7 +452,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8638,
     lng: -4.3152,
-    coordNote: "No OSM feature is named Lyceum (Overpass and Nominatim searches returned nothing). Atlas point kept: it lies on Govan Road (OSM way 656254486), ~70 m west of St Anthony's, on public pavement."
+    coordNote: "No OSM feature is named Lyceum (Overpass and Nominatim searches returned nothing). Atlas point kept: it lies on Govan Road (OSM way 656254486), ~70 m west of St Anthony's, on public pavement.",
+    then: thenFrom(OS_SIX_INCH, "lyceum-cinema"),
   },
   {
     slug: "fairfield-heritage",
@@ -455,7 +485,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8641,
     lng: -4.3201,
-    coordNote: "OSM node 3791239455 (Fairfield Heritage Centre, 1048 Govan Road, 55.86410,-4.32010). Atlas point matches within 1 m; kept. It is at the building frontage on the Govan Road pavement."
+    coordNote: "OSM node 3791239455 (Fairfield Heritage Centre, 1048 Govan Road, 55.86410,-4.32010). Atlas point matches within 1 m; kept. It is at the building frontage on the Govan Road pavement.",
+    then: thenFrom(OS_SIX_INCH, "fairfield-heritage"),
   },
   {
     slug: "shipyards",
@@ -497,7 +528,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86408,
     lng: -4.3233,
-    coordNote: "BAE Systems yard (OSM way 133174308, landuse=industrial) is private. Atlas point (55.8654,-4.3197) was inside the yard. Moved to the north pavement of Govan Road (OSM way 11480917) against the yard boundary, opposite Elder Park, ~200 m west of the Fairfield offices."
+    coordNote: "BAE Systems yard (OSM way 133174308, landuse=industrial) is private. Atlas point (55.8654,-4.3197) was inside the yard. Moved to the north pavement of Govan Road (OSM way 11480917) against the yard boundary, opposite Elder Park, ~200 m west of the Fairfield offices.",
+    then: thenFrom(OS_SIX_INCH, "shipyards"),
   },
   {
     slug: "linthouse",
@@ -529,7 +561,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8672,
     lng: -4.3324,
-    coordNote: "No OSM feature for the former Stephen yard. Atlas point kept: it lies on Holmfauld Road (OSM way 383064400, public road) in the riverside industrial ground of Linthouse, the nearest public point to the former yard."
+    coordNote: "No OSM feature for the former Stephen yard. Atlas point kept: it lies on Holmfauld Road (OSM way 383064400, public road) in the riverside industrial ground of Linthouse, the nearest public point to the former yard.",
+    thenUnavailable: "Linthouse lies just west of the edge of the Ordnance Survey six-inch Lanarkshire Sheet 6 (1863–65) and outside the frame of the 1882 Bartholomew plan, so neither public-domain map used here covers this spot.",
   },
   {
     slug: "clyde-tunnel",
@@ -561,7 +594,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8646,
     lng: -4.3299,
-    coordNote: "South portal of the pedestrian and cycle tunnel (OSM way 22752445 Clyde Tunnel cycleway, south end 55.86463,-4.32994; continues as way 22752446 to Govan Road). Atlas point (55.8668,-4.3370) was ~480 m away in the Linthouse industrial estate."
+    coordNote: "South portal of the pedestrian and cycle tunnel (OSM way 22752445 Clyde Tunnel cycleway, south end 55.86463,-4.32994; continues as way 22752446 to Govan Road). Atlas point (55.8668,-4.3370) was ~480 m away in the Linthouse industrial estate.",
+    then: thenFrom(OS_SIX_INCH, "clyde-tunnel"),
   },
   {
     slug: "elder-park-library",
@@ -593,7 +627,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.86178,
     lng: -4.3219,
-    coordNote: "OSM way 134836868 (Elder Park Library, centroid 55.86196,-4.32189). Atlas point (55.8620,-4.3219) was inside the building; moved ~20 m south to the Langlands Road frontage (OSM way 10682501)."
+    coordNote: "OSM way 134836868 (Elder Park Library, centroid 55.86196,-4.32189). Atlas point (55.8620,-4.3219) was inside the building; moved ~20 m south to the Langlands Road frontage (OSM way 10682501).",
+    then: thenFrom(OS_SIX_INCH, "elder-park-library"),
   },
   {
     slug: "isabella-elder-mural",
@@ -625,7 +660,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8617,
     lng: -4.3233,
-    coordNote: "Mural is not mapped in OSM. Atlas point kept: it lies on Langlands Road (OSM way 10682501, public street), the street the mural faces."
+    coordNote: "Mural is not mapped in OSM. Atlas point kept: it lies on Langlands Road (OSM way 10682501, public street), the street the mural faces.",
+    then: thenFrom(OS_SIX_INCH, "isabella-elder-mural"),
   },
   {
     slug: "elder-park",
@@ -658,7 +694,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.861455,
     lng: -4.325502,
-    coordNote: "OSM way 10682502 (Elder Park, leisure=park, access=yes) and node 12994517732 (Isabella Elder Statue, Canmore 164117). Atlas point (55.8607,-4.3266) was south of Langlands Road outside the park; moved into the park beside the Isabella Elder statue."
+    coordNote: "OSM way 10682502 (Elder Park, leisure=park, access=yes) and node 12994517732 (Isabella Elder Statue, Canmore 164117). Atlas point (55.8607,-4.3266) was south of Langlands Road outside the park; moved into the park beside the Isabella Elder statue.",
+    then: thenFrom(OS_SIX_INCH, "elder-park"),
   },
   {
     slug: "elder-cottage-hospital",
@@ -690,7 +727,8 @@ export const stops: Stop[] = [
     ],
     lat: 55.8601,
     lng: -4.3281,
-    coordNote: "Hospital building is not named in OSM (Nominatim search empty). Atlas point kept: it lies on Drumoyne Drive (OSM way 14351029, public street), the street named in the Atlas story."
+    coordNote: "Hospital building is not named in OSM (Nominatim search empty). Atlas point kept: it lies on Drumoyne Drive (OSM way 14351029, public street), the street named in the Atlas story.",
+    then: thenFrom(OS_SIX_INCH, "elder-cottage-hospital"),
   }
 ];
 

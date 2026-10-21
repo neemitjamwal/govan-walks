@@ -1,0 +1,547 @@
+{
+  "userAgent": "GovanWalks/0.1 (https://github.com/neemitjamwal/govan-walks)",
+  "sourcePreference": [
+    "os6-lanark-1863",
+    "bartholomew-1882"
+  ],
+  "stopSourceOverrides": {
+    "govan-graving-docks": {
+      "source": "bartholomew-1882",
+      "why": "The 1882 plan shows a graving dock beside this stop; the 1863–65 OS sheet shows none here."
+    }
+  },
+  "crop": {
+    "width": 1000,
+    "height": 750,
+    "outputWidth": 1000,
+    "webpQuality": 70,
+    "ringRadius": 26,
+    "ringWidth": 7,
+    "ringColor": "#d9772b",
+    "ringOutline": "#2a2420",
+    "maxRmsM": 40,
+    "minControlPoints": 4
+  },
+  "sources": {
+    "os6-lanark-1863": {
+      "title": "Ordnance Survey six-inch map, Lanarkshire Sheet 6, published 1863–65",
+      "commonsFile": "Map of Lanarkshire Sheet 006, Ordnance Survey, 1863-1865.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Map_of_Lanarkshire_Sheet_006,_Ordnance_Survey,_1863-1865.jpg",
+      "cacheFile": ".cache/os6-lanark-1863.jpg",
+      "bytes": 19124451,
+      "mapArea": {
+        "left": 0,
+        "top": 0,
+        "right": 10688,
+        "bottom": 7166
+      },
+      "controlPoints": [
+        {
+          "name": "Dumbarton Road / Byres Road junction (Partick Cross)",
+          "px": [
+            2212,
+            3097
+          ],
+          "lat": 55.870472,
+          "lng": -4.299501,
+          "residualM": 5.1
+        },
+        {
+          "name": "Dumbarton Road / Crow Road junction",
+          "px": [
+            1293,
+            3048
+          ],
+          "lat": 55.870741,
+          "lng": -4.312638,
+          "residualM": 9.6
+        },
+        {
+          "name": "Paisley Road Toll (Govan Road / Paisley Road)",
+          "px": [
+            3670,
+            5157
+          ],
+          "lat": 55.853704,
+          "lng": -4.278496,
+          "residualM": 2.6
+        },
+        {
+          "name": "Govan Old Parish Church (OSM way 49859412 centroid)",
+          "px": [
+            1284,
+            3816
+          ],
+          "lat": 55.8646,
+          "lng": -4.313,
+          "residualM": 6.6
+        },
+        {
+          "name": "Govan Road / Water Row junction (Govan Cross)",
+          "px": [
+            1382,
+            4000
+          ],
+          "lat": 55.863055,
+          "lng": -4.311566,
+          "residualM": 3.6
+        },
+        {
+          "name": "Langlands Road / Drumoyne Road junction",
+          "px": [
+            280,
+            4267
+          ],
+          "lat": 55.860863,
+          "lng": -4.327439,
+          "residualM": 1.4
+        },
+        {
+          "name": "Govan Road / Broomloan Road junction",
+          "px": [
+            1597,
+            4161
+          ],
+          "lat": 55.861793,
+          "lng": -4.308381,
+          "residualM": 3.8
+        }
+      ],
+      "rmsM": 5.3,
+      "metresPerPixel": 0.903,
+      "size": [
+        10688,
+        7166
+      ]
+    },
+    "bartholomew-1882": {
+      "title": "John Bartholomew, New Plan of Glasgow with suburbs, 1882",
+      "commonsFile": "New Plan of Glasgow with suburbs from Ordnance and actual surveys, constructed for the post office - directory by John Bartholomew... - btv1b53239419r.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:New_Plan_of_Glasgow_with_suburbs_from_Ordnance_and_actual_surveys,_constructed_for_the_post_office_-_directory_by_John_Bartholomew..._-_btv1b53239419r.jpg",
+      "cacheFile": ".cache/bartholomew-1882.jpg",
+      "bytes": 17259853,
+      "mapArea": {
+        "left": 560,
+        "top": 0,
+        "right": 10668,
+        "bottom": 8954
+      },
+      "controlPoints": [
+        {
+          "name": "Govan Old Parish Church ('Es. Ch.'; OSM way 49859412 centroid)",
+          "px": [
+            936,
+            3722
+          ],
+          "lat": 55.8646,
+          "lng": -4.313,
+          "residualM": 21.8
+        },
+        {
+          "name": "Dumbarton Road / Merkland Street junction",
+          "px": [
+            1270,
+            2950
+          ],
+          "lat": 55.870779,
+          "lng": -4.309101,
+          "residualM": 21.6
+        },
+        {
+          "name": "Dumbarton Road / Church Street junction",
+          "px": [
+            2030,
+            2990
+          ],
+          "lat": 55.870025,
+          "lng": -4.297373,
+          "residualM": 35.9
+        },
+        {
+          "name": "Govan Road / Water Row junction (Govan Cross)",
+          "px": [
+            1065,
+            3895
+          ],
+          "lat": 55.863055,
+          "lng": -4.311566,
+          "residualM": 18.3
+        },
+        {
+          "name": "Stewart Memorial Fountain, Kelvingrove Park (OSM way 390919922)",
+          "px": [
+            2965,
+            3286
+          ],
+          "lat": 55.868062,
+          "lng": -4.283814,
+          "residualM": 15
+        },
+        {
+          "name": "University of Glasgow main building (OSM relation 11951 centroid)",
+          "px": [
+            2661,
+            2846
+          ],
+          "lat": 55.871446,
+          "lng": -4.288496,
+          "residualM": 2.2
+        }
+      ],
+      "rmsM": 21.6,
+      "metresPerPixel": 0.9,
+      "size": [
+        10668,
+        8954
+      ]
+    }
+  },
+  "stops": {
+    "govan-cross": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1407.4,
+        4051.6
+      ],
+      "window": {
+        "left": 907,
+        "top": 3677,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.4,
+        374.6
+      ],
+      "kb": 143.3
+    },
+    "doomster-hill": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1432.4,
+        3920.1
+      ],
+      "window": {
+        "left": 932,
+        "top": 3545,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.4,
+        375.1
+      ],
+      "kb": 149.5
+    },
+    "water-row": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1455.1,
+        3888.2
+      ],
+      "window": {
+        "left": 955,
+        "top": 3513,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.1,
+        375.2
+      ],
+      "kb": 149.4
+    },
+    "govan-ferry": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1483.9,
+        3839.1
+      ],
+      "window": {
+        "left": 984,
+        "top": 3464,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.9,
+        375.1
+      ],
+      "kb": 143
+    },
+    "govan-partick-bridge": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1530.5,
+        3821.3
+      ],
+      "window": {
+        "left": 1030,
+        "top": 3446,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.5,
+        375.3
+      ],
+      "kb": 142.5
+    },
+    "old-govan-walkway": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1301.5,
+        3731.5
+      ],
+      "window": {
+        "left": 802,
+        "top": 3356,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.5,
+        375.5
+      ],
+      "kb": 135.9
+    },
+    "govan-old-church": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1288.5,
+        3839.4
+      ],
+      "window": {
+        "left": 789,
+        "top": 3464,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.5,
+        375.4
+      ],
+      "kb": 138.3
+    },
+    "govan-graving-docks": {
+      "source": "bartholomew-1882",
+      "px": [
+        1664.7,
+        4295.2
+      ],
+      "window": {
+        "left": 1165,
+        "top": 3920,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.7,
+        375.2
+      ],
+      "kb": 133.2
+    },
+    "pearce-statue": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1287.3,
+        3969.6
+      ],
+      "window": {
+        "left": 787,
+        "top": 3595,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.3,
+        374.6
+      ],
+      "kb": 139.2
+    },
+    "pearce-institute": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1320.5,
+        3959.1
+      ],
+      "window": {
+        "left": 820,
+        "top": 3584,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.5,
+        375.1
+      ],
+      "kb": 142.2
+    },
+    "st-anthonys-church": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1178.5,
+        3924.1
+      ],
+      "window": {
+        "left": 679,
+        "top": 3549,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.5,
+        375.1
+      ],
+      "kb": 125.1
+    },
+    "lyceum-cinema": {
+      "source": "os6-lanark-1863",
+      "px": [
+        1126.6,
+        3909.2
+      ],
+      "window": {
+        "left": 627,
+        "top": 3534,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        499.6,
+        375.2
+      ],
+      "kb": 119.6
+    },
+    "fairfield-heritage": {
+      "source": "os6-lanark-1863",
+      "px": [
+        787.4,
+        3871.2
+      ],
+      "window": {
+        "left": 287,
+        "top": 3496,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.4,
+        375.2
+      ],
+      "kb": 85.1
+    },
+    "shipyards": {
+      "source": "os6-lanark-1863",
+      "px": [
+        566,
+        3872.9
+      ],
+      "window": {
+        "left": 66,
+        "top": 3498,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500,
+        374.9
+      ],
+      "kb": 65.6
+    },
+    "linthouse": {
+      "source": null,
+      "reason": "outside both map scans"
+    },
+    "clyde-tunnel": {
+      "source": "os6-lanark-1863",
+      "px": [
+        109.1,
+        3807.4
+      ],
+      "window": {
+        "left": 0,
+        "top": 3432,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        109.1,
+        375.4
+      ],
+      "kb": 54.8
+    },
+    "elder-park-library": {
+      "source": "os6-lanark-1863",
+      "px": [
+        664.2,
+        4156.1
+      ],
+      "window": {
+        "left": 164,
+        "top": 3781,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.2,
+        375.1
+      ],
+      "kb": 79.3
+    },
+    "isabella-elder-mural": {
+      "source": "os6-lanark-1863",
+      "px": [
+        567.4,
+        4165.6
+      ],
+      "window": {
+        "left": 67,
+        "top": 3791,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        500.4,
+        374.6
+      ],
+      "kb": 70.7
+    },
+    "elder-park": {
+      "source": "os6-lanark-1863",
+      "px": [
+        415.2,
+        4195.2
+      ],
+      "window": {
+        "left": 0,
+        "top": 3820,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        415.2,
+        375.2
+      ],
+      "kb": 65.9
+    },
+    "elder-cottage-hospital": {
+      "source": "os6-lanark-1863",
+      "px": [
+        236.2,
+        4361.3
+      ],
+      "window": {
+        "left": 0,
+        "top": 3986,
+        "width": 1000,
+        "height": 750
+      },
+      "ring": [
+        236.2,
+        375.3
+      ],
+      "kb": 61.9
+    }
+  }
+}

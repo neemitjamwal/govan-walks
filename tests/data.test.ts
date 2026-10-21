@@ -114,9 +114,7 @@ describe('stops', () => {
     expect(stop.lng).toBeLessThanOrEqual(-4.29);
   });
 
-  // DISABLED UNTIL then-crops-pipeline: that feature fills `then` for every stop and must
-  // switch this from it.skip to it so every stop needs a credited then-picture or a thenUnavailable reason.
-  it.skip('[enable in then-crops-pipeline] every stop has a credited then-picture or a thenUnavailable reason', () => {
+  it('every stop has a credited then-picture or a thenUnavailable reason', () => {
     for (const stop of stops) {
       if (stop.then) {
         expect(stop.then.src, stop.slug).toMatch(/^\/then\/[a-z0-9-]+\.webp$/);

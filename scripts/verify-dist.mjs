@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { stops } from '../src/data/stops.ts';
 
 const dist = join(process.cwd(), 'dist');
 const errors = [];
@@ -21,6 +22,11 @@ if (!existsSync(dist)) {
   }
 
   if (!existsSync(join(dist, 'index.html'))) errors.push('dist/index.html is missing');
+
+  const pictures = stops.filter((s) => s.then).map((s) => s.then.src);
+  const missing = pictures.filter((src) => !existsSync(join(dist, src)));
+  if (missing.length) errors.push(`then pictures missing from dist: ${missing.join(', ')}`);
+  else notes.push(`${pictures.length} then pictures present`);
 }
 
 for (const n of notes) console.log(`ok   ${n}`);
