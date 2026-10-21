@@ -595,6 +595,72 @@
     fill: var(--color-ink);
   }
 
+  .walk-minimap {
+    position: relative;
+    margin: 0.4rem 0 0.75rem;
+  }
+
+  .walk-minimap .walk-sketch {
+    margin: 0;
+  }
+
+  /* The sketch stays in flow to size the box and shows if the map cannot load. */
+  .walk-minimap-map {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-sepia-dark);
+    background: var(--color-paper-deep);
+    font-family: var(--font-body);
+  }
+
+  .walk-minimap.has-map .walk-sketch {
+    visibility: hidden;
+  }
+
+  .walk-minimap-map .leaflet-tile-pane {
+    filter: sepia(0.25) saturate(0.85);
+  }
+
+  .walk-minimap-map .leaflet-control-attribution {
+    font-size: 0.65rem;
+    background: rgb(243 234 215 / 0.92);
+    color: var(--color-ink);
+  }
+
+  .walk-minimap-map .leaflet-control-attribution a {
+    color: var(--color-survey-dark);
+  }
+
+  .survey-marker.survey-marker-mini {
+    width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+    border-width: 1.5px;
+  }
+
+  .walk-sketch-crossing path {
+    fill: none;
+    stroke: #1f5f8b;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1 5;
+  }
+
+  .walk-sketch-crossing circle {
+    fill: #1f5f8b;
+    stroke: #fff8ec;
+    stroke-width: 1.5;
+  }
+
+  .walk-crossing {
+    margin: 0.5rem 0 0;
+    color: var(--color-ink-soft);
+  }
+
+  .crossing-label {
+    font-weight: 600;
+  }
+
   .walk-sketch-north text {
     font-family: var(--font-display);
     font-size: 8px;

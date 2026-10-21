@@ -12,9 +12,17 @@ const stops = stopsForWalk(walk);
 const stats = walkStats(walk);
 const km = (stats.distanceM / 1000).toFixed(1);
 const box = { width: 320, height: 150, pad: 18 };
-const { points, path } = routeSketch(stops, box);
+const sketch = routeSketch(walk.crossing ? [...stops, walk.crossing] : stops, box);
+const points = sketch.points.slice(0, stops.length);
+const crossingPoint = walk.crossing ? sketch.points[stops.length] : null;
+const path = crossingPoint ? sketch.path.slice(0, sketch.path.lastIndexOf(' L')) : sketch.path;
+const last = points[points.length - 1];
 const roman = ['I', 'II', 'III', 'IV', 'V', 'VI'][sheet - 1] ?? String(sheet);
 const href = `${import.meta.env.BASE_URL}walks/${walk.slug}/`;
+const routeData = JSON.stringify({
+  stops: stops.map((s) => ({ lat: s.lat, lng: s.lng })),
+  crossing: walk.crossing ? { name: walk.crossing.name, lat: walk.crossing.lat, lng: walk.crossing.lng } : null,
+});
 const sketchLabel = `Route sketch: ${stats.stopCount} stops from ${stops[0].name} to ${stops[stops.length - 1].name}`;
 ---
 
@@ -22,12 +30,21 @@ const sketchLabel = `Route sketch: ${stats.stopCount} stops from ${stops[0].name
   <p class="walk-card-sheet">Sheet {roman}</p>
   <h3 class="walk-card-name">{walk.name}</h3>
   <p class="walk-theme">{walk.theme}</p>
+  <div class="walk-minimap" data-route={routeData}>
   <svg class="walk-sketch" viewBox={`0 0 ${box.width} ${box.height}`} role="img" aria-label={sketchLabel}>
     <g class="walk-sketch-grid">
       {[1, 2, 3].map((n) => <line x1={(box.width / 4) * n} y1="0" x2={(box.width / 4) * n} y2={box.height} />)}
       {[1, 2].map((n) => <line x1="0" y1={(box.height / 3) * n} x2={box.width} y2={(box.height / 3) * n} />)}
     </g>
     <path class="walk-sketch-route" d={path} />
+    {
+      crossingPoint && (
+        <g class="walk-sketch-crossing">
+          <path d={`M${last.x.toFixed(1)} ${last.y.toFixed(1)} L${crossingPoint.x.toFixed(1)} ${crossingPoint.y.toFixed(1)}`} />
+          <circle cx={crossingPoint.x.toFixed(1)} cy={crossingPoint.y.toFixed(1)} r="4" />
+        </g>
+      )
+    }
     {
       points.map((p, i) => (
         <g class="walk-sketch-stop">
@@ -43,6 +60,7 @@ const sketchLabel = `Route sketch: ${stats.stopCount} stops from ${stops[0].name
       <text y="13" text-anchor="middle">N</text>
     </g>
   </svg>
+  </div>
   <p class="walk-stats walk-card-stats">
     {stats.stopCount} stops · about {km} km · about {stats.minutes} minutes
   </p>

@@ -23,6 +23,7 @@ const km = (stats.distanceM / 1000).toFixed(1);
 const pageData = {
   walk: walk.slug,
   stops: stops.map((s) => ({ slug: s.slug, name: s.name, lat: s.lat, lng: s.lng, speech: speechChunks(s) })),
+  crossing: walk.crossing ? { name: walk.crossing.name, lat: walk.crossing.lat, lng: walk.crossing.lng } : null,
 };
 // Escape "<" so story text can never close the JSON script element early.
 const pageJson = JSON.stringify(pageData).replace(/</g, '\\u003c');
@@ -46,6 +47,14 @@ const pageJson = JSON.stringify(pageData).replace(/</g, '\\u003c');
     <div class="walk-map-frame">
       <div id="walk-map" class="walk-map" role="region" aria-label={`Route map of the ${walk.name} walk`}></div>
     </div>
+    {
+      walk.crossing && (
+        <p class="walk-crossing">
+          After the last stop, carry on through the tunnel to {walk.crossing.name.split(':')[0]}: the blue line on the
+          map.
+        </p>
+      )
+    }
 
     <GpsPanel />
     <StopViewer stops={stops} />

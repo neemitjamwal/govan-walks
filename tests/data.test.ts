@@ -71,11 +71,18 @@ describe('walks', () => {
     expect(km('isabella-elder')).toBeLessThan(2);
     expect(walkStats(getWalk('isabella-elder')!).stopCount).toBe(5);
     expect(km('under-the-clyde')).toBeGreaterThan(0.6);
-    expect(km('under-the-clyde')).toBeLessThan(2);
+    expect(km('under-the-clyde')).toBeLessThan(2.5);
   });
 
-  it('under-the-clyde finishes at the Clyde Tunnel', () => {
-    expect(getWalk('under-the-clyde')!.stops).toEqual(['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel']);
+  it('under-the-clyde finishes at the Clyde Tunnel and crosses under the river to Whiteinch', () => {
+    const walk = getWalk('under-the-clyde')!;
+    expect(walk.stops).toEqual(['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel']);
+    const tunnel = getStop('clyde-tunnel')!;
+    const end = walk.crossing!;
+    expect(end.lat).toBeGreaterThan(tunnel.lat);
+    expect(haversine(tunnel, end)).toBeGreaterThan(700);
+    expect(haversine(tunnel, end)).toBeLessThan(1100);
+    expect(walks.filter((w) => w.crossing).map((w) => w.slug)).toEqual(['under-the-clyde']);
   });
 
   it('the-yards and isabella-elder run as westward routes along the south bank', () => {

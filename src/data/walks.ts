@@ -1,4 +1,4 @@
-import { routeLength, walkingMinutes } from '../lib/geo';
+import { routeLength, walkingMinutes, type LatLng } from '../lib/geo';
 import { getStop, type Stop } from './stops';
 
 export interface Walk {
@@ -7,6 +7,13 @@ export interface Walk {
   theme: string;
   intro: string;
   stops: string[];
+  /** Where the walk carries on past its last stop, e.g. through the Clyde Tunnel to the north bank. */
+  crossing?: Crossing;
+}
+
+export interface Crossing extends LatLng {
+  name: string;
+  coordNote: string;
 }
 
 // Themes and intros may only restate facts already present in the stop stories.
@@ -56,10 +63,16 @@ export const walks: Walk[] = [
   {
     slug: 'under-the-clyde',
     name: 'Under the Clyde',
-    theme: 'Fairfield, the yards and Linthouse, then a walk under the River Clyde itself.',
+    theme: 'Fairfield, the yards and Linthouse, then under the River Clyde itself to Whiteinch.',
     intro:
-      'Start at the Fairfield offices, the red sandstone palace built between 1888 and 1891, and walk west past the yard next door, where ships are still built on the very same site. Carry on to Linthouse, where Alexander Stephen & Sons built their engine shop in 1872, then finish at the Clyde Tunnel. Under its road decks run separate pedestrian and cycle tunnels: ten minutes on foot, a couple by bike, under the River Clyde itself.',
+      'Start at the Fairfield offices, the red sandstone palace built between 1888 and 1891, and walk west past the yard next door, where ships are still built on the very same site. Carry on to Linthouse, where Alexander Stephen & Sons built their engine shop in 1872, then go down into the Clyde Tunnel. Under its road decks run separate pedestrian and cycle tunnels: ten minutes on foot, a couple by bike, under the River Clyde itself to Whiteinch.',
     stops: ['fairfield-heritage', 'shipyards', 'linthouse', 'clyde-tunnel'],
+    crossing: {
+      name: 'Whiteinch: north end of the tunnel',
+      lat: 55.87274,
+      lng: -4.329109,
+      coordNote: 'North end of OSM way 22752445 (Clyde Tunnel pedestrian and cycle tunnel, east bore), whose south end is the clyde-tunnel stop.',
+    },
   },
 ];
 
@@ -82,6 +95,7 @@ export interface WalkStats {
 }
 
 export function walkStats(walk: Walk): WalkStats {
-  const distanceM = routeLength(stopsForWalk(walk));
+  const points: LatLng[] = stopsForWalk(walk);
+  const distanceM = routeLength(walk.crossing ? [...points, walk.crossing] : points);
   return { distanceM, minutes: walkingMinutes(distanceM), stopCount: walk.stops.length };
 }

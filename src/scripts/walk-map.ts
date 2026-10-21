@@ -5,6 +5,10 @@ export interface MapStop extends LatLng {
   name: string;
 }
 
+export interface MapCrossing extends LatLng {
+  name: string;
+}
+
 export interface WalkMap {
   setCurrent(index: number, pan: boolean): void;
   setUser(position: LatLng | null): void;
@@ -16,6 +20,7 @@ export function createWalkMap(
   stops: MapStop[],
   onSelect: (index: number) => void,
   reducedMotion: boolean,
+  crossing: MapCrossing | null = null,
 ): WalkMap {
   const map = L.map(el, {
     scrollWheelZoom: false,
@@ -31,9 +36,33 @@ export function createWalkMap(
 
   const points = stops.map((s) => L.latLng(s.lat, s.lng));
   // Leaflet only adds layers once the map has a view, so set it before creating markers whose elements we decorate.
-  map.fitBounds(L.latLngBounds(points), { padding: [28, 28], maxZoom: 17 });
+  const crossingPoint = crossing ? L.latLng(crossing.lat, crossing.lng) : null;
+  map.fitBounds(L.latLngBounds(crossingPoint ? [...points, crossingPoint] : points), { padding: [28, 28], maxZoom: 17 });
 
   L.polyline(points, { color: '#b23a2a', weight: 4, opacity: 0.85, dashArray: '8 6', className: 'route-line' }).addTo(map);
+
+  if (crossing && crossingPoint) {
+    L.polyline([points[points.length - 1], crossingPoint], {
+      color: '#1f5f8b',
+      weight: 5,
+      opacity: 0.9,
+      dashArray: '2 8',
+      lineCap: 'round',
+      className: 'crossing-line',
+      interactive: false,
+    }).addTo(map);
+    L.circleMarker(crossingPoint, {
+      radius: 7,
+      color: '#fff8ec',
+      weight: 2,
+      fillColor: '#1f5f8b',
+      fillOpacity: 1,
+      className: 'crossing-end',
+      interactive: false,
+    })
+      .bindTooltip(crossing.name, { permanent: true, direction: 'right', offset: [8, 0], className: 'crossing-label' })
+      .addTo(map);
+  }
 
   const markers = stops.map((stop, i) => {
     const marker = L.marker(points[i], {

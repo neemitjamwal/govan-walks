@@ -3,7 +3,7 @@ import { gpsView } from '../lib/gps-view';
 import { onPageCache } from '../lib/page-cache';
 import { createWalkState, walkReducer, type WalkAction, type WalkState } from '../lib/walk-state';
 import { setupListen } from './listen';
-import { createWalkMap } from './walk-map';
+import { createWalkMap, type MapCrossing } from './walk-map';
 
 interface PageStop extends LatLng {
   slug: string;
@@ -14,7 +14,11 @@ interface PageStop extends LatLng {
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
 export function startWalkPage() {
-  const data = JSON.parse($('walk-data').textContent ?? '{}') as { walk: string; stops: PageStop[] };
+  const data = JSON.parse($('walk-data').textContent ?? '{}') as {
+    walk: string;
+    stops: PageStop[];
+    crossing: MapCrossing | null;
+  };
   const stops = data.stops;
   const slugs = stops.map((s) => s.slug);
   const names = stops.map((s) => s.name);
@@ -43,7 +47,7 @@ export function startWalkPage() {
   const listItems = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-select-stop]'));
 
   const listen = setupListen($('listen'));
-  const map = createWalkMap($('walk-map'), stops, (i) => select(i, { scrollToCard: false }), reducedMotion);
+  const map = createWalkMap($('walk-map'), stops, (i) => select(i, { scrollToCard: false }), reducedMotion, data.crossing);
 
   function renderGps() {
     const view = gpsView(state, names);

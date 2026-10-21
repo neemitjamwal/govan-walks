@@ -1,4 +1,5 @@
 ---
+import 'leaflet/dist/leaflet.css';
 import Base from '../layouts/Base.astro';
 import WalkCard from '../components/WalkCard.astro';
 import { walks } from '../data/walks';
@@ -25,3 +26,8 @@ import { walks } from '../data/walks';
     </ul>
   </section>
 </Base>
+
+<script>
+  import { mountMiniMaps } from '../scripts/mini-maps';
+  mountMiniMaps();
+</script>

@@ -16,7 +16,7 @@ The site is fully static. It has no server, no accounts, no API keys and no trac
 | **Ancient Govan** (`/walks/ancient-govan/`) | 7 | Govan Cross → Doomster Hill → Water Row → The Govan Ferry → Govan–Partick Bridge → The Old Govan Walkway → Govan Old & the Govan Stones |
 | **The Yards** (`/walks/the-yards/`) | 9 | Govan Graving Docks → The Black Man (Sir William Pearce Monument) → The Pearce Institute → St Anthony's Church → The Lyceum → Fairfield Offices & Fairfield Heritage → The Govan Shipyards → The Clyde Tunnel → Linthouse |
 | **Isabella Elder's Govan** (`/walks/isabella-elder/`) | 5 | Fairfield Offices & Fairfield Heritage → Elder Park Library → The Isabella Elder Mural → Elder Park → Elder Cottage Hospital |
-| **Under the Clyde** (`/walks/under-the-clyde/`) | 4 | Fairfield Offices & Fairfield Heritage → The Govan Shipyards → Linthouse → The Clyde Tunnel (then through the pedestrian and cycle tunnel under the river) |
+| **Under the Clyde** (`/walks/under-the-clyde/`) | 4 | Fairfield Offices & Fairfield Heritage → The Govan Shipyards → Linthouse → The Clyde Tunnel → through the pedestrian and cycle tunnel under the river to Whiteinch |
 
 The home page shows each walk's distance, walking time and stop count. These are worked out from the stop positions in `src/data/stops.ts` (straight lines between stops), so the distance you actually walk on the streets will be a little longer.
 
