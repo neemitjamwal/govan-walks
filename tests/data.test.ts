@@ -71,8 +71,28 @@ describe('walks', () => {
     expect(walkStats(getWalk('isabella-elder')!).stopCount).toBe(5);
   });
 
-  it('no leg between consecutive stops is longer than 1 km', () => {
-    for (const walk of walks) {
+  it('the-yards and isabella-elder run as westward routes along the south bank', () => {
+    expect(getWalk('the-yards')!.stops).toEqual([
+      'govan-graving-docks',
+      'pearce-statue',
+      'pearce-institute',
+      'st-anthonys-church',
+      'lyceum-cinema',
+      'fairfield-heritage',
+      'shipyards',
+      'clyde-tunnel',
+      'linthouse',
+    ]);
+    expect(getWalk('isabella-elder')!.stops).toEqual([
+      'fairfield-heritage',
+      'elder-park-library',
+      'isabella-elder-mural',
+      'elder-park',
+      'elder-cottage-hospital',
+    ]);
+  });
+
+  it('no leg between consecutive stops is longer than 1 km', () => {    for (const walk of walks) {
       const s = stopsForWalk(walk);
       for (let i = 1; i < s.length; i++) expect(haversine(s[i - 1], s[i]), `${walk.slug} leg ${i}`).toBeLessThan(1000);
     }

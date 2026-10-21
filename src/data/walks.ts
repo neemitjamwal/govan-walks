@@ -32,7 +32,7 @@ export const walks: Walk[] = [
     name: 'The Yards',
     theme: 'Dry docks, shipyard offices and the berths that built the world.',
     intro:
-      "Begin at the Govan Graving Docks, carved into the riverbank by the Clyde Navigation Trust between 1869 and 1898, and walk west along Govan Road past 'the Black Man', the Pearce Institute, St Anthony's and the Lyceum. Then come to the Fairfield offices and the yard next door, where ships are still built on the very same site, before ending at Linthouse and the Clyde Tunnel, whose pedestrian and cycle tunnels run under the River Clyde itself.",
+      "Begin at the Govan Graving Docks, carved into the riverbank by the Clyde Navigation Trust between 1869 and 1898, and walk west along Govan Road past 'the Black Man', the Pearce Institute, St Anthony's and the Lyceum. Then come to the Fairfield offices and the yard next door, where ships are still built on the very same site, then pass the Clyde Tunnel, whose pedestrian and cycle tunnels run under the River Clyde itself, before ending at Linthouse.",
     stops: [
       'govan-graving-docks',
       'pearce-statue',
@@ -41,8 +41,8 @@ export const walks: Walk[] = [
       'lyceum-cinema',
       'fairfield-heritage',
       'shipyards',
-      'linthouse',
       'clyde-tunnel',
+      'linthouse',
     ],
   },
   {
