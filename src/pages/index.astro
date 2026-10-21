@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base>
+  <section class="map-frame px-5 py-8 text-center">
+    <p class="map-label m-0">Self-guided heritage walks</p>
+    <h1 class="map-title my-2">Govan Walks</h1>
+    <p class="mx-auto max-w-prose text-ink-soft">
+      Walk Govan with your phone. Each stop has a short story from The Govan Atlas, a picture from an old map of the
+      spot, live directions to the next stop, and a button that reads the story aloud.
+    </p>
+  </section>
+
+  <section class="mt-8" aria-labelledby="walks-heading">
+    <h2 id="walks-heading" class="text-2xl">Choose a walk</h2>
+    <ul class="m-0 mt-4 list-none p-0">
+      <li class="stop-card">
+        <p class="stop-number m-0">Walk 1</p>
+        <h3 class="mb-2 mt-1 text-2xl">Ancient Govan</h3>
+        <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}walks/ancient-govan/`}>Start this walk</a>
+      </li>
+    </ul>
+  </section>
+</Base>

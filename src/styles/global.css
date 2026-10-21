@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3ead7;
+  --color-paper-deep: #e8dcc0;
+  --color-paper-edge: #d9c9a3;
+  --color-ink: #2a2420;
+  --color-ink-soft: #4a3f35;
+  --color-sepia: #8a6f4d;
+  --color-sepia-dark: #6b5338;
+  --color-survey: #b23a2a;
+  --color-survey-dark: #8e2b1e;
+  --color-river: #5d7c8a;
+  --color-river-dark: #3f5a66;
+  --color-tape: #d9772b;
+
+  --font-display: "Libre Caslon Text", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --tracking-label: 0.18em;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+    /* Paper grain built from layered gradients so no image file is needed. */
+    background-image:
+      radial-gradient(circle at 20% 15%, rgb(255 250 235 / 0.55), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgb(217 201 163 / 0.35), transparent 50%),
+      repeating-linear-gradient(0deg, rgb(42 36 32 / 0.018) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgb(42 36 32 / 0.014) 0 1px, transparent 1px 4px);
+    background-attachment: fixed;
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+
+  a {
+    color: var(--color-survey-dark);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    color: var(--color-survey);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-river-dark);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgb(178 58 42 / 0.2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Double neat-line like the frame of a printed map sheet. */
+  .map-frame {
+    position: relative;
+    border: 2px solid var(--color-ink);
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+    background-color: rgb(243 234 215 / 0.85);
+    margin: 4px;
+  }
+
+  .neat-line {
+    border: 0;
+    border-top: 1px solid var(--color-ink);
+    border-bottom: 1px solid var(--color-ink);
+    height: 4px;
+    margin: 1.5rem 0;
+  }
+
+  .map-label {
+    font-family: var(--font-display);
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--tracking-label);
+    font-size: 0.95rem;
+    color: var(--color-sepia-dark);
+  }
+
+  .map-title {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.55rem 1.1rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 2px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--color-ink);
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+  }
+
+  .btn:hover {
+    background: var(--color-paper-deep);
+    color: var(--color-ink);
+  }
+
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 var(--color-ink);
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .btn-primary {
+    background: var(--color-survey-dark);
+    border-color: var(--color-survey-dark);
+    color: #fff8ec;
+    box-shadow: 2px 2px 0 var(--color-ink);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-survey);
+    color: #fff8ec;
+  }
+
+  .btn-quiet {
+    border-color: var(--color-sepia-dark);
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .stop-card {
+    position: relative;
+    padding: 1.25rem 1.1rem 1.4rem;
+    border: 2px solid var(--color-ink);
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+    margin: 4px;
+    background-color: rgb(250 244 230 / 0.92);
+  }
+
+  .stop-card .stop-number {
+    font-family: var(--font-display);
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-survey-dark);
+    font-size: 1rem;
+  }
+
+  .stop-card h2 {
+    font-size: 1.85rem;
+    margin: 0.15rem 0 0.25rem;
+  }
+
+  .stop-card .stop-era {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--color-sepia-dark);
+  }
+
+  .stop-card .stop-tagline {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--color-ink-soft);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .stop-card p {
+    margin: 0 0 0.9rem;
+  }
+
+  .stop-facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25rem 1rem;
+    margin: 1rem 0;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-sepia);
+    border-bottom: 1px solid var(--color-sepia);
+  }
+
+  .stop-facts dt {
+    font-family: var(--font-display);
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.12em;
+    color: var(--color-sepia-dark);
+  }
+
+  .stop-facts dd {
+    margin: 0;
+  }
+
+  .then-figure {
+    margin: 1.25rem 0;
+  }
+
+  .then-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-ink);
+    filter: sepia(0.15);
+  }
+
+  .then-figure figcaption {
+    font-size: 0.9rem;
+    color: var(--color-ink-soft);
+    margin-top: 0.4rem;
+  }
+
+  .north-arrow {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--color-ink);
+  }
+
+  .survey-marker {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #fff8ec;
+    background: var(--color-survey);
+    color: #fff8ec;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 0 0 1px var(--color-ink);
+  }
+
+  .survey-marker.is-current {
+    background: var(--color-ink);
+  }
+}
