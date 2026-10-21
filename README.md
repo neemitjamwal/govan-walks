@@ -2,7 +2,7 @@
 
 Govan Walks is a phone-first website for four self-guided heritage walks around Govan, Glasgow. Open it on your phone, pick a walk and follow the stops. Each stop has:
 
-- a short story copied from [The Govan Atlas](https://github.com/neemitjamwal/govan),
+- a short story copied from [The Govan Atlas](https://govan-atlas.netlify.app/),
 - a "then" picture: a small piece of an old public-domain map, with a ring marking where the stop is today,
 - live GPS (only when you press **Start GPS**) showing where you are and the distance and direction to the stop, with an "arrived" state,
 - a **Listen** button that reads the stop aloud with the phone's built-in speech.
@@ -83,7 +83,7 @@ Every then-picture on the site shows its credit and a link to the Commons file.
 
 ## Credits and sources
 
-- **Stories:** every stop's name, date, tagline, story and quick facts come word for word from [The Govan Atlas](https://github.com/neemitjamwal/govan).
+- **Stories:** every stop's name, date, tagline, story and quick facts come word for word from [The Govan Atlas](https://govan-atlas.netlify.app/) (source: [neemitjamwal/govan](https://github.com/neemitjamwal/govan)).
 - **Today's map:** map data and tiles © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), under the Open Database License (ODbL). The attribution is always shown on the map. Stop positions were checked against OpenStreetMap.
 - **Historic maps:** see [Map sources and licences](#map-sources-and-licences).
 - **Software:** [Astro](https://astro.build/), [Leaflet](https://leafletjs.com/) (BSD-2-Clause), [Tailwind CSS](https://tailwindcss.com/), [Vitest](https://vitest.dev/) and [sharp](https://sharp.pixelplumbing.com/).
