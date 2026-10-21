@@ -1,0 +1,23 @@
+---
+---
+
+<section id="gps-panel" class="gps-panel" data-gps-state="off" aria-labelledby="gps-heading">
+  <h2 id="gps-heading" class="map-label m-0">Directions to this stop</h2>
+  <div class="gps-readout">
+    <svg id="gps-arrow" class="gps-arrow" viewBox="0 0 48 48" aria-hidden="true" hidden>
+      <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+      <path d="M24 6 L33 34 L24 28 L15 34 Z" fill="currentColor"></path>
+    </svg>
+    <div class="gps-text">
+      <p id="gps-distance" class="gps-distance" hidden></p>
+      <p id="gps-message" class="gps-message" role="status">
+        Start GPS to see how far you are from each stop. Your location stays on your phone.
+      </p>
+    </div>
+  </div>
+  <div class="gps-actions">
+    <button type="button" id="gps-start" class="btn btn-primary">Start GPS</button>
+    <button type="button" id="gps-next" class="btn btn-primary" hidden>Next stop</button>
+    <button type="button" id="gps-stop" class="btn btn-quiet" hidden>Stop GPS</button>
+  </div>
+</section>

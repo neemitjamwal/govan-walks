@@ -1,0 +1,61 @@
+---
+import 'leaflet/dist/leaflet.css';
+import Base from '../../layouts/Base.astro';
+import GpsPanel from '../../components/GpsPanel.astro';
+import StopViewer from '../../components/StopViewer.astro';
+import StopList from '../../components/StopList.astro';
+import { stopsForWalk, walks, walkStats, type Walk } from '../../data/walks';
+import { speechChunks } from '../../lib/speech';
+
+export function getStaticPaths() {
+  return walks.map((walk) => ({ params: { walk: walk.slug }, props: { walk } }));
+}
+
+interface Props {
+  walk: Walk;
+}
+
+const { walk } = Astro.props;
+const stops = stopsForWalk(walk);
+const stats = walkStats(walk);
+const km = (stats.distanceM / 1000).toFixed(1);
+
+const pageData = {
+  walk: walk.slug,
+  stops: stops.map((s) => ({ slug: s.slug, name: s.name, lat: s.lat, lng: s.lng, speech: speechChunks(s) })),
+};
+// Escape "<" so story text can never close the JSON script element early.
+const pageJson = JSON.stringify(pageData).replace(/</g, '\\u003c');
+---
+
+<Base title={walk.name} description={walk.theme}>
+  <div class="walk-page">
+    <header class="walk-header">
+      <p class="map-label m-0">A walk in Govan</p>
+      <h1 class="map-title my-1">{walk.name}</h1>
+      <p class="walk-stats m-0" id="walk-stats">
+        {stats.stopCount} stops · about {km} km · about {stats.minutes} minutes walking
+      </p>
+      <p class="walk-theme">{walk.theme}</p>
+      <details class="walk-intro">
+        <summary>About this walk</summary>
+        <p>{walk.intro}</p>
+      </details>
+    </header>
+
+    <div class="walk-map-frame">
+      <div id="walk-map" class="walk-map" role="region" aria-label={`Route map of the ${walk.name} walk`}></div>
+    </div>
+
+    <GpsPanel />
+    <StopViewer stops={stops} />
+    <StopList stops={stops} />
+  </div>
+
+  <script type="application/json" id="walk-data" set:html={pageJson} />
+</Base>
+
+<script>
+  import { startWalkPage } from '../../scripts/walk-page';
+  startWalkPage();
+</script>

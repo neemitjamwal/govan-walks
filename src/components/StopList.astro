@@ -1,0 +1,31 @@
+---
+import type { Stop } from '../data/stops';
+
+interface Props {
+  stops: Stop[];
+}
+
+const { stops } = Astro.props;
+---
+
+<section class="stop-list-section" aria-labelledby="stop-list-heading">
+  <h2 id="stop-list-heading" class="text-2xl">The stops</h2>
+  <ol class="stop-list">
+    {
+      stops.map((stop, i) => (
+        <li>
+          <button type="button" class="stop-list-item" data-select-stop={i} aria-current={i === 0 ? 'step' : undefined}>
+            <span class="stop-list-number" aria-hidden="true">
+              {i + 1}
+            </span>
+            <span class="stop-list-text">
+              <span class="sr-only">Stop {i + 1}: </span>
+              <span class="stop-list-name">{stop.name}</span>
+              <span class="stop-list-era">{stop.era}</span>
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ol>
+</section>

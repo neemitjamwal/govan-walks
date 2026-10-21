@@ -1,0 +1,61 @@
+---
+import type { Stop } from '../data/stops';
+import ListenControls from './ListenControls.astro';
+import ThenPicture from './ThenPicture.astro';
+
+interface Props {
+  stops: Stop[];
+}
+
+const { stops } = Astro.props;
+const total = stops.length;
+---
+
+<article id="stop-card" class="stop-card walk-stop-card" aria-labelledby="stop-card-heading">
+  <h2 id="stop-card-heading" class="sr-only">Current stop</h2>
+  {
+    stops.map((stop, i) => (
+      <div class="stop-head" data-stop-index={i} hidden={i !== 0}>
+        <p class="stop-number m-0">
+          Stop {i + 1} of {total}
+        </p>
+        <h3 class="stop-name" tabindex="-1">
+          {stop.name}
+        </h3>
+        <p class="stop-era m-0">{stop.era}</p>
+        <p class="stop-tagline">{stop.tagline}</p>
+      </div>
+    ))
+  }
+
+  <ListenControls />
+
+  {
+    stops.map((stop, i) => (
+      <div class="stop-body" data-stop-index={i} hidden={i !== 0}>
+        {stop.story.map((p) => (
+          <p>{p}</p>
+        ))}
+        <dl class="stop-facts">
+          {stop.quickFacts.map((f) => (
+            <>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </>
+          ))}
+        </dl>
+        <ThenPicture stop={stop} />
+      </div>
+    ))
+  }
+
+  <nav class="stop-nav" aria-label="Stops">
+    <button type="button" id="prev-stop" class="btn btn-quiet" hidden>
+      <span aria-hidden="true">←</span> Previous
+    </button>
+    <button type="button" id="next-stop" class="btn">
+      Next <span aria-hidden="true">→</span>
+    </button>
+    <p id="end-of-walk" class="end-of-walk map-label m-0" hidden>End of walk</p>
+  </nav>
+</article>

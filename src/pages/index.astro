@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getWalk, walkStats } from '../data/walks';
+
+const walk = getWalk('ancient-govan')!;
+const stats = walkStats(walk);
 ---
 
 <Base>
@@ -17,8 +21,12 @@ import Base from '../layouts/Base.astro';
     <ul class="m-0 mt-4 list-none p-0">
       <li class="stop-card">
         <p class="stop-number m-0">Walk 1</p>
-        <h3 class="mb-2 mt-1 text-2xl">Ancient Govan</h3>
-        <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}walks/ancient-govan/`}>Start this walk</a>
+        <h3 class="mb-1 mt-1 text-2xl">{walk.name}</h3>
+        <p class="walk-stats">
+          {stats.stopCount} stops · about {(stats.distanceM / 1000).toFixed(1)} km · about {stats.minutes} minutes
+        </p>
+        <p>{walk.theme}</p>
+        <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}walks/${walk.slug}/`}>Start this walk</a>
       </li>
     </ul>
   </section>
