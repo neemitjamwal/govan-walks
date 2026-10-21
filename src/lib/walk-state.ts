@@ -16,6 +16,8 @@ export interface WalkState {
   bearing: number | null;
   /** Metres from the position to the walk's first stop. */
   distanceToStart: number | null;
+  /** The watch has errored since the last fix, so the position is only the last known one. */
+  stale: boolean;
 }
 
 export type WalkAction =
@@ -34,7 +36,7 @@ const clampIndex = (stops: LatLng[], index: number) => Math.min(Math.max(0, inde
 
 const watching = (status: GpsStatus) => status === 'locating' || status === 'active' || status === 'arrived' || status === 'far';
 
-const cleared = { position: null, distance: null, bearing: null, distanceToStart: null };
+const cleared = { position: null, distance: null, bearing: null, distanceToStart: null, stale: false };
 
 export function createWalkState(stops: LatLng[], stopIndex = 0): WalkState {
   if (stops.length === 0) throw new Error('A walk needs at least one stop');
@@ -63,11 +65,12 @@ export function walkReducer(state: WalkState, action: WalkAction): WalkState {
     case 'stop':
       return { ...state, ...cleared, status: 'off' };
     case 'position':
-      return watching(state.status) ? measure(state, action.position) : state;
+      return watching(state.status) ? measure({ ...state, stale: false }, action.position) : state;
     case 'error':
       if (!watching(state.status)) return state;
       if (action.code === PERMISSION_DENIED) return { ...state, ...cleared, status: 'denied' };
-      return state.position ? state : { ...state, status: 'unavailable' };
+      // After a fix the watch stays alive, so a later fix recovers; until then the reading is marked stale.
+      return state.position ? { ...state, stale: true } : { ...state, status: 'unavailable' };
     case 'select':
       return moveTo(state, action.index);
     case 'next':

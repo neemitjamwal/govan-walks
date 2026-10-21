@@ -127,3 +127,23 @@ describe('stops', () => {
     }
   });
 });
+
+describe('subject-level viewing points', () => {
+  it('the Isabella Elder mural point stands in front of the painted gable', () => {
+    const mural = getStop('isabella-elder-mural')!;
+    const pin = { lat: 55.8611333, lng: -4.3241472 };
+    expect(haversine(mural, pin)).toBeLessThan(15);
+    expect(haversine(mural, { lat: 55.8617, lng: -4.3233 })).toBeGreaterThan(70);
+    expect(mural.coordNote).toMatch(/243 Langlands Road/);
+  });
+
+  it('the Lyceum and Elder Cottage Hospital notes cite their HES records', () => {
+    expect(getStop('lyceum-cinema')!.coordNote).toMatch(/Historic Environment Scotland place 172378.*908 Govan Road/);
+    expect(getStop('elder-cottage-hospital')!.coordNote).toMatch(/Historic Environment Scotland place 162817.*1a Drumoyne Drive/);
+  });
+
+  it('the Lyceum and hospital points are within 60 m of their HES points', () => {
+    expect(haversine(getStop('lyceum-cinema')!, { lat: 55.8643, lng: -4.31516 })).toBeLessThan(60);
+    expect(haversine(getStop('elder-cottage-hospital')!, { lat: 55.8606, lng: -4.32778 })).toBeLessThan(60);
+  });
+});

@@ -12,14 +12,24 @@ export interface GpsView {
   showStop: boolean;
   showNext: boolean;
   finished: boolean;
+  /** Set when the shown reading is only the last known position. */
+  staleText: string | null;
 }
+
+export const STALE_TEXT = 'Signal lost. Showing your last known position.';
 
 const STILL_WORKS = 'you can still follow the walk using the map';
 
 /** What the GPS panel should say for a walk state; stopNames are in walk order. */
 export function gpsView(state: WalkState, stopNames: string[]): GpsView {
+  const view = baseView(state, stopNames);
+  const stale = state.stale && state.position !== null && view.distanceText !== null;
+  return { ...view, staleText: stale ? STALE_TEXT : null };
+}
+
+function baseView(state: WalkState, stopNames: string[]): Omit<GpsView, 'staleText'> {
   const current = stopNames[state.stopIndex];
-  const base: GpsView = {
+  const base: Omit<GpsView, 'staleText'> = {
     status: state.status,
     distanceText: null,
     arrowDeg: null,

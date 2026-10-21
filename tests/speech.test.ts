@@ -153,3 +153,74 @@ describe('speech controller', () => {
     expect(states).toEqual([]);
   });
 });
+
+// Models Chromium: cancel() empties the queue but leaves the engine paused, so later speech queues unheard.
+function chromiumSynth() {
+  const queue: FakeUtterance[] = [];
+  const heard: string[] = [];
+  const synth = {
+    paused: false,
+    queue,
+    heard,
+    speak: vi.fn((u: FakeUtterance) => {
+      queue.push(u);
+      if (!synth.paused) heard.push(u.text);
+    }),
+    cancel: vi.fn(() => queue.splice(0)),
+    pause: vi.fn(() => {
+      synth.paused = true;
+    }),
+    resume: vi.fn(() => {
+      synth.paused = false;
+    }),
+    getVoices: () => [],
+  };
+  return synth;
+}
+
+describe('speech controller on an engine that stays paused after cancel', () => {
+  function pausedSetup() {
+    const synth = chromiumSynth();
+    const controller = createSpeechController({ synth, createUtterance: (text) => new FakeUtterance(text) });
+    controller.speak(['first stop']);
+    controller.pause();
+    expect(synth.paused).toBe(true);
+    return { synth, controller };
+  }
+
+  it('Pause, Stop, then Listen plays a fresh reading', () => {
+    const { synth, controller } = pausedSetup();
+    controller.stop();
+    expect(synth.paused).toBe(false);
+    controller.speak(['first stop']);
+    expect(controller.state).toBe('speaking');
+    expect(synth.paused).toBe(false);
+    expect(synth.heard).toEqual(['first stop', 'first stop']);
+  });
+
+  it('Pause, change stop, then Listen plays the new stop', () => {
+    const { synth, controller } = pausedSetup();
+    // Changing stop calls stop() on the controller (see listen.ts setStop).
+    controller.stop();
+    controller.speak(['second stop']);
+    expect(controller.state).toBe('speaking');
+    expect(synth.paused).toBe(false);
+    expect(synth.queue.map((u) => u.text)).toEqual(['second stop']);
+    expect(synth.heard.at(-1)).toBe('second stop');
+  });
+
+  it('Listen straight after Pause also clears the pause', () => {
+    const { synth, controller } = pausedSetup();
+    controller.speak(['second stop']);
+    expect(synth.paused).toBe(false);
+    expect(synth.heard.at(-1)).toBe('second stop');
+  });
+
+  it('Pause then Resume still resumes the current reading', () => {
+    const { synth, controller } = pausedSetup();
+    controller.resume();
+    expect(controller.state).toBe('speaking');
+    expect(synth.paused).toBe(false);
+    expect(synth.queue.map((u) => u.text)).toEqual(['first stop']);
+  });
+});

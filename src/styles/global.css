@@ -388,6 +388,15 @@
     font-weight: 600;
   }
 
+  .gps-stale {
+    margin: 0.25rem 0 0;
+    font-style: italic;
+  }
+
+  .gps-panel[data-gps-stale] .gps-distance {
+    opacity: 0.6;
+  }
+
   .gps-actions,
   .listen-controls,
   .stop-nav {

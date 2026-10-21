@@ -452,7 +452,7 @@ export const stops: Stop[] = [
     ],
     lat: 55.8638,
     lng: -4.3152,
-    coordNote: "No OSM feature is named Lyceum (Overpass and Nominatim searches returned nothing). Atlas point kept: it lies on Govan Road (OSM way 656254486), ~70 m west of St Anthony's, on public pavement.",
+    coordNote: "Subject: Historic Environment Scotland place 172378 (Lyceum, 908 Govan Road, NGR 255212 665882, 55.86430,-4.31516). No OSM feature is named Lyceum. Atlas point kept: it lies on the Govan Road pavement (OSM way 656254486, ~5 m from the centreline), ~70 m west of St Anthony's and ~56 m along the same pavement from the HES point, with the building in view.",
     then: thenFrom(OS_SIX_INCH, "lyceum-cinema"),
   },
   {
@@ -658,9 +658,9 @@ export const stops: Stop[] = [
         value: "Isabella Elder, Elder Park Library and the park roses"
       }
     ],
-    lat: 55.8617,
-    lng: -4.3233,
-    coordNote: "Mural is not mapped in OSM. Atlas point kept: it lies on Langlands Road (OSM way 10682501, public street), the street the mural faces.",
+    lat: 55.861163,
+    lng: -4.324276,
+    coordNote: "Subject: street-art map pin for the mural at 243 Langlands Road (streetartcities.com, 55.8611333,-4.3241472), on the gable of tenement block OSM way 133368862; the mural is not mapped in OSM. Atlas point (55.8617,-4.3233) was ~82 m from the painted gable; moved ~83 m south-west along the Langlands Road pavement (OSM way 10682501) to stand in front of the gable, ~7 m from the road centreline and ~9 m from the pin.",
     then: thenFrom(OS_SIX_INCH, "isabella-elder-mural"),
   },
   {
@@ -727,7 +727,7 @@ export const stops: Stop[] = [
     ],
     lat: 55.8601,
     lng: -4.3281,
-    coordNote: "Hospital building is not named in OSM (Nominatim search empty). Atlas point kept: it lies on Drumoyne Drive (OSM way 14351029, public street), the street named in the Atlas story.",
+    coordNote: "Subject: Historic Environment Scotland place 162817 (Elder Cottage Hospital, 1a Drumoyne Drive, NGR 254408 665497, 55.86060,-4.32778), next to the unnamed OSM building way 1287974025. Atlas point kept: it lies on Drumoyne Drive (OSM way 14351029, ~2 m from the centreline), the street the hospital fronts, ~59 m from the HES point with the building in view.",
     then: thenFrom(OS_SIX_INCH, "elder-cottage-hospital"),
   }
 ];

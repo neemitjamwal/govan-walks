@@ -37,8 +37,9 @@ export function setupListen(container: HTMLElement): Listen {
   };
 
   const synth = window.speechSynthesis;
-  // Chrome can keep speaking a previous page's queue after navigation.
+  // Chrome can keep speaking a previous page's queue after navigation, or stay paused after it.
   synth.cancel();
+  synth.resume();
   // Some browsers only fill the voice list after this event; reading it once warms the list up.
   synth.getVoices();
   synth.addEventListener?.('voiceschanged', () => synth.getVoices());

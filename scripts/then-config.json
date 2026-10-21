@@ -492,20 +492,20 @@
     "isabella-elder-mural": {
       "source": "os6-lanark-1863",
       "px": [
-        567.4,
-        4165.6
+        500.1,
+        4231.4
       ],
       "window": {
-        "left": 67,
-        "top": 3791,
+        "left": 0,
+        "top": 3856,
         "width": 1000,
         "height": 750
       },
       "ring": [
-        500.4,
-        374.6
+        500.1,
+        375.4
       ],
-      "kb": 70.7
+      "kb": 62.1
     },
     "elder-park": {
       "source": "os6-lanark-1863",

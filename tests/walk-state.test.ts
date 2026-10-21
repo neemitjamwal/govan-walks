@@ -206,3 +206,40 @@ describe('finishing', () => {
     expect(isFinished(s)).toBe(true);
   });
 });
+
+describe('errors after a fix', () => {
+  const fixed = () => walkReducer(started(), { type: 'position', position: north(stops[0], 150) });
+
+  it('a post-fix unavailable or timeout error marks the last reading stale', () => {
+    for (const code of [2, 3]) {
+      const s = walkReducer(fixed(), { type: 'error', code });
+      expect(s.status).toBe('active');
+      expect(s.stale).toBe(true);
+      expect(s.distance).toBeCloseTo(150, 0);
+    }
+  });
+
+  it('stays stale over consecutive errors and clears on the next fix', () => {
+    let s = walkReducer(fixed(), { type: 'error', code: 2 });
+    s = walkReducer(s, { type: 'error', code: 3 });
+    expect(s.stale).toBe(true);
+    s = walkReducer(s, { type: 'position', position: north(stops[0], 80) });
+    expect(s.stale).toBe(false);
+    expect(s.distance).toBeCloseTo(80, 0);
+  });
+
+  it('is never stale before a fix, after stop, or after denial', () => {
+    expect(started().stale).toBe(false);
+    expect(walkReducer(started(), { type: 'error', code: 2 }).stale).toBe(false);
+    const stale = walkReducer(fixed(), { type: 'error', code: 2 });
+    expect(walkReducer(stale, { type: 'stop' }).stale).toBe(false);
+    expect(walkReducer(stale, { type: 'error', code: 1 }).stale).toBe(false);
+    expect(walkReducer(walkReducer(stale, { type: 'stop' }), { type: 'start', supported: true }).stale).toBe(false);
+  });
+
+  it('changing stop while stale keeps the stale mark', () => {
+    const s = walkReducer(walkReducer(fixed(), { type: 'error', code: 2 }), { type: 'next' });
+    expect(s.stopIndex).toBe(1);
+    expect(s.stale).toBe(true);
+  });
+});

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { gpsView } from '../src/lib/gps-view';
+import { STALE_TEXT, gpsView } from '../src/lib/gps-view';
 import { createWalkState, walkReducer } from '../src/lib/walk-state';
 
 const stops = [
@@ -75,5 +75,30 @@ describe('gpsView', () => {
     const unavailable = gpsView(walkReducer(createWalkState(stops), { type: 'start', supported: false }), names);
     expect(unavailable.message).toMatch(/you can still follow the walk using the map/);
     expect(unavailable.showStop).toBe(true);
+  });
+});
+
+describe('gpsView stale readings', () => {
+  it('a post-fix error keeps the numbers and adds the stale line; the next fix clears it', () => {
+    let s = walkReducer(createWalkState(stops), { type: 'start', supported: true });
+    s = walkReducer(s, { type: 'position', position: north(stops[0], 200) });
+    expect(gpsView(s, names).staleText).toBeNull();
+    s = walkReducer(s, { type: 'error', code: 2 });
+    const stale = gpsView(s, names);
+    expect(stale.status).toBe('active');
+    expect(stale.distanceText).toBe('200 m · south');
+    expect(stale.staleText).toBe(STALE_TEXT);
+    expect(STALE_TEXT).toBe('Signal lost. Showing your last known position.');
+    s = walkReducer(s, { type: 'position', position: north(stops[0], 120) });
+    const fresh = gpsView(s, names);
+    expect(fresh.staleText).toBeNull();
+    expect(fresh.distanceText).toBe('120 m · south');
+  });
+
+  it('an error before any fix shows unavailable with no stale line', () => {
+    const s = walkReducer(walkReducer(createWalkState(stops), { type: 'start', supported: true }), { type: 'error', code: 3 });
+    const v = gpsView(s, names);
+    expect(v.status).toBe('unavailable');
+    expect(v.staleText).toBeNull();
   });
 });

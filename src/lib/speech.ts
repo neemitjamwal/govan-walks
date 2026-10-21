@@ -63,6 +63,12 @@ export function createSpeechController<U extends UtteranceLike>(options: {
   // Bumped on every speak/stop so end and error events from cancelled utterances are ignored.
   let generation = 0;
 
+  // Chromium's cancel() leaves the engine paused, so new utterances would queue silently; resume() clears that.
+  const cancel = () => {
+    synth.cancel();
+    synth.resume();
+  };
+
   const set = (next: SpeechState) => {
     if (next === state) return;
     state = next;
@@ -75,7 +81,7 @@ export function createSpeechController<U extends UtteranceLike>(options: {
     },
     speak(chunks) {
       const run = ++generation;
-      synth.cancel();
+      cancel();
       if (chunks.length === 0) return set('idle');
       const voice = pickVoice(synth.getVoices());
       set('speaking');
@@ -90,7 +96,7 @@ export function createSpeechController<U extends UtteranceLike>(options: {
           const { error } = ev as unknown as { error?: string };
           if (run !== generation || error === 'interrupted' || error === 'canceled') return;
           generation++;
-          synth.cancel();
+          cancel();
           set('idle');
         };
         synth.speak(u);
@@ -109,7 +115,7 @@ export function createSpeechController<U extends UtteranceLike>(options: {
     stop() {
       generation++;
       if (state === 'idle') return;
-      synth.cancel();
+      cancel();
       set('idle');
     },
   };

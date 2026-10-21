@@ -68,10 +68,11 @@ if (!existsSync(dist)) {
   const missingDeclared = declared.filter((src) => !existsSync(join(dist, src)));
   if (missingDeclared.length) errors.push(`then pictures declared in stops.ts missing from dist: ${missingDeclared.join(', ')}`);
 
-  const thenBytes = [...referenced]
-    .filter((src) => existsSync(join(dist, src)))
-    .reduce((sum, src) => sum + statSync(join(dist, src)).size, 0);
-  notes.push(`then ${referenced.size} pictures referenced in ${html.length} HTML pages, all present (${kb(thenBytes)} total)`);
+  const present = [...referenced].filter((src) => existsSync(join(dist, src)));
+  const thenBytes = present.reduce((sum, src) => sum + statSync(join(dist, src)).size, 0);
+  const summary = `${referenced.size} pictures referenced in ${html.length} HTML pages, ${present.length} present, ${missingRefs.length} missing (${kb(thenBytes)} total)`;
+  if (missingRefs.length) errors.push(`then ${summary}`);
+  else notes.push(`then ${summary}`);
 
   const total = walk(dist).reduce((sum, f) => sum + statSync(f).size, 0);
   notes.push(`dist ${walk(dist).length} files, ${kb(total)} total (${relative(root, dist)})`);

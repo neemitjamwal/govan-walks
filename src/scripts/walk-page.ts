@@ -1,5 +1,6 @@
 import type { LatLng } from '../lib/geo';
 import { gpsView } from '../lib/gps-view';
+import { onPageCache } from '../lib/page-cache';
 import { createWalkState, walkReducer, type WalkAction, type WalkState } from '../lib/walk-state';
 import { setupListen } from './listen';
 import { createWalkMap } from './walk-map';
@@ -30,6 +31,7 @@ export function startWalkPage() {
   const gpsArrow = document.getElementById('gps-arrow') as unknown as SVGElement;
   const gpsDistance = $('gps-distance');
   const gpsMessage = $('gps-message');
+  const gpsStale = $('gps-stale');
   const gpsStart = $<HTMLButtonElement>('gps-start');
   const gpsNext = $<HTMLButtonElement>('gps-next');
   const gpsStop = $<HTMLButtonElement>('gps-stop');
@@ -50,6 +52,9 @@ export function startWalkPage() {
     gpsDistance.hidden = view.distanceText === null;
     gpsDistance.textContent = view.distanceText ?? '';
     if (gpsMessage.textContent !== view.message) gpsMessage.textContent = view.message;
+    panel.toggleAttribute('data-gps-stale', view.staleText !== null);
+    gpsStale.hidden = view.staleText === null;
+    if (gpsStale.textContent !== (view.staleText ?? '')) gpsStale.textContent = view.staleText ?? '';
     gpsArrow.toggleAttribute('hidden', view.arrowDeg === null);
     if (view.arrowDeg !== null) gpsArrow.style.transform = `rotate(${Math.round(view.arrowDeg)}deg)`;
     gpsStart.hidden = !view.showStart;
@@ -137,7 +142,14 @@ export function startWalkPage() {
     const i = indexFromHash();
     if (i >= 0) dispatch({ type: 'select', index: i });
   });
-  window.addEventListener('pagehide', clearWatch);
+  // A page restored from the back/forward cache has no watch any more, so return the panel to off.
+  onPageCache(window, {
+    hide: clearWatch,
+    restore: () => {
+      clearWatch();
+      if (state.status !== 'off') dispatch({ type: 'stop' }, false);
+    },
+  });
 
   renderStop(startIndex !== 0);
   renderGps();
