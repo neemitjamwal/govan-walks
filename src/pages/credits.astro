@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import { stops } from '../data/stops';
+import { walks } from '../data/walks';
+import type { ThenSource } from '../data/stops';
+
+const usedStops = new Set(walks.flatMap((w) => w.stops));
+const usedSources = new Set<ThenSource>(
+  stops.filter((s) => usedStops.has(s.slug) && s.then).map((s) => s.then!.source),
+);
+
+const mapSources: {
+  id: ThenSource;
+  title: string;
+  detail: string;
+  holder: string;
+  holderUrl: string;
+  commonsUrl: string;
+  licence: string;
+}[] = [
+  {
+    id: 'os6-lanark-1863',
+    title: 'Ordnance Survey six-inch map, Lanarkshire Sheet 6, 1863–65',
+    detail: 'The source for nearly every “then” picture on the walks.',
+    holder: 'British History Online',
+    holderUrl: 'https://www.british-history.ac.uk/os-1-to-10560/lanarkshire/006',
+    commonsUrl: 'https://commons.wikimedia.org/wiki/File:Map_of_Lanarkshire_Sheet_006,_Ordnance_Survey,_1863-1865.jpg',
+    licence: 'Public domain (copyright expired)',
+  },
+  {
+    id: 'bartholomew-1882',
+    title: 'John Bartholomew, New Plan of Glasgow with suburbs, 1882',
+    detail: 'Used where the Ordnance Survey sheet does not show what a stop is about.',
+    holder: 'Bibliothèque nationale de France (Gallica)',
+    holderUrl: 'https://gallica.bnf.fr/ark:/12148/btv1b53239419r',
+    commonsUrl:
+      'https://commons.wikimedia.org/wiki/File:New_Plan_of_Glasgow_with_suburbs_from_Ordnance_and_actual_surveys,_constructed_for_the_post_office_-_directory_by_John_Bartholomew..._-_btv1b53239419r.jpg',
+    licence: 'Public domain (copyright expired)',
+  },
+];
+const shownSources = mapSources.filter((s) => usedSources.has(s.id));
+---
+
+<Base title="Credits" description="Sources and licences for Govan Walks: stories, maps and software.">
+  <header class="mb-6">
+    <p class="map-label m-0">Sources &amp; licences</p>
+    <h1 class="map-title my-1">Credits</h1>
+  </header>
+
+  <section class="stop-card mb-6" aria-labelledby="stories-heading">
+    <h2 id="stories-heading" class="mt-0 text-2xl">Stories</h2>
+    <p>
+      Every stop's name, date, tagline, story and quick facts come word for word from{' '}
+      <a href="https://github.com/neemitjamwal/govan">The Govan Atlas</a>.
+    </p>
+  </section>
+
+  <section class="stop-card mb-6" aria-labelledby="maps-heading">
+    <h2 id="maps-heading" class="mt-0 text-2xl">Maps</h2>
+    <h3 class="mb-1 text-xl">Today's map</h3>
+    <p>
+      Map data and tiles © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, available
+      under the Open Database License (ODbL).
+    </p>
+    <h3 class="mb-1 text-xl">Historic maps</h3>
+    <ul class="m-0 list-none p-0">
+      {
+        shownSources.map((s) => (
+          <li class="mb-4" data-map-source={s.id}>
+            <p class="m-0 font-semibold">{s.title}</p>
+            <p class="m-0">{s.detail}</p>
+            <p class="m-0">
+              {s.licence}. Original held by <a href={s.holderUrl}>{s.holder}</a>; scan via{' '}
+              <a href={s.commonsUrl}>Wikimedia Commons</a>.
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="stop-card mb-6" aria-labelledby="software-heading">
+    <h2 id="software-heading" class="mt-0 text-2xl">Software</h2>
+    <p>
+      Maps drawn with <a href="https://leafletjs.com/">Leaflet</a> (BSD-2-Clause licence). Site built with{' '}
+      <a href="https://astro.build/">Astro</a> and <a href="https://tailwindcss.com/">Tailwind CSS</a>.
+    </p>
+  </section>
+
+  <section class="stop-card" aria-labelledby="privacy-heading">
+    <h2 id="privacy-heading" class="mt-0 text-2xl">Your location</h2>
+    <p>
+      GPS only starts when you press “Start GPS”. Your location stays on your device: it is used in your browser to
+      work out the distance and direction to the next stop, and is never sent to or stored by this site.
+    </p>
+  </section>
+</Base>
