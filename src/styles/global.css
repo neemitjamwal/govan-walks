@@ -521,4 +521,86 @@
     font-size: 0.9rem;
     color: var(--color-ink-soft);
   }
+  /* Home: each walk is framed like a sheet from a map series. */
+  .walk-cards {
+    display: grid;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+
+  .walk-card {
+    position: relative;
+    padding: 1.1rem 1.1rem 1.25rem;
+    border: 2px solid var(--color-ink);
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+    margin: 4px;
+    background-color: rgb(250 244 230 / 0.92);
+  }
+
+  .walk-card-sheet {
+    margin: 0;
+    font-family: var(--font-display);
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-survey-dark);
+  }
+
+  .walk-card-name {
+    margin: 0.1rem 0 0;
+    font-size: 1.75rem;
+  }
+
+  .walk-sketch {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0.4rem 0 0.75rem;
+    border: 1px solid var(--color-sepia-dark);
+    background: var(--color-paper-deep);
+  }
+
+  .walk-sketch-grid line {
+    stroke: var(--color-sepia);
+    stroke-width: 0.5;
+    stroke-dasharray: 2 3;
+    opacity: 0.6;
+  }
+
+  .walk-sketch-route {
+    fill: none;
+    stroke: var(--color-survey);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 6 4;
+  }
+
+  .walk-sketch-stop circle {
+    fill: var(--color-survey);
+    stroke: #fff8ec;
+    stroke-width: 1.5;
+  }
+
+  .walk-sketch-stop text {
+    fill: #fff8ec;
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .walk-sketch-north {
+    fill: var(--color-ink);
+  }
+
+  .walk-sketch-north text {
+    font-family: var(--font-display);
+    font-size: 8px;
+  }
+
+  .walk-card-stats {
+    margin: 0 0 0.9rem;
+  }
 }

@@ -1,9 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getWalk, walkStats } from '../data/walks';
-
-const walk = getWalk('ancient-govan')!;
-const stats = walkStats(walk);
+import WalkCard from '../components/WalkCard.astro';
+import { walks } from '../data/walks';
 ---
 
 <Base>
@@ -11,23 +9,19 @@ const stats = walkStats(walk);
     <p class="map-label m-0">Self-guided heritage walks</p>
     <h1 class="map-title my-2">Govan Walks</h1>
     <p class="mx-auto max-w-prose text-ink-soft">
-      Walk Govan with your phone. Each stop has a short story from The Govan Atlas, a picture from an old map of the
-      spot, live directions to the next stop, and a button that reads the story aloud.
+      Govan began at an ancient ford over the Clyde. Govan Old has been a Christian site since roughly AD 500, Isabella
+      Elder gave Govan its park in 1885, and ships are still built on the very same site at Fairfield.
+    </p>
+    <p class="mx-auto max-w-prose text-ink-soft">
+      Walk it with your phone. Each stop has a short story from The Govan Atlas, a picture from an old map of the spot,
+      live directions to the next stop, and a button that reads the story aloud.
     </p>
   </section>
 
   <section class="mt-8" aria-labelledby="walks-heading">
     <h2 id="walks-heading" class="text-2xl">Choose a walk</h2>
-    <ul class="m-0 mt-4 list-none p-0">
-      <li class="stop-card">
-        <p class="stop-number m-0">Walk 1</p>
-        <h3 class="mb-1 mt-1 text-2xl">{walk.name}</h3>
-        <p class="walk-stats">
-          {stats.stopCount} stops · about {(stats.distanceM / 1000).toFixed(1)} km · about {stats.minutes} minutes
-        </p>
-        <p>{walk.theme}</p>
-        <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}walks/${walk.slug}/`}>Start this walk</a>
-      </li>
+    <ul class="walk-cards">
+      {walks.map((walk, i) => <WalkCard walk={walk} sheet={i + 1} />)}
     </ul>
   </section>
 </Base>

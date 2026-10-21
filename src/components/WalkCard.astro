@@ -1,0 +1,50 @@
+---
+import { stopsForWalk, walkStats, type Walk } from '../data/walks';
+import { routeSketch } from '../lib/route-sketch';
+
+interface Props {
+  walk: Walk;
+  sheet: number;
+}
+
+const { walk, sheet } = Astro.props;
+const stops = stopsForWalk(walk);
+const stats = walkStats(walk);
+const km = (stats.distanceM / 1000).toFixed(1);
+const box = { width: 320, height: 150, pad: 18 };
+const { points, path } = routeSketch(stops, box);
+const roman = ['I', 'II', 'III', 'IV', 'V', 'VI'][sheet - 1] ?? String(sheet);
+const href = `${import.meta.env.BASE_URL}walks/${walk.slug}/`;
+const sketchLabel = `Route sketch: ${stats.stopCount} stops from ${stops[0].name} to ${stops[stops.length - 1].name}`;
+---
+
+<li class="walk-card">
+  <p class="walk-card-sheet">Sheet {roman}</p>
+  <h3 class="walk-card-name">{walk.name}</h3>
+  <p class="walk-theme">{walk.theme}</p>
+  <svg class="walk-sketch" viewBox={`0 0 ${box.width} ${box.height}`} role="img" aria-label={sketchLabel}>
+    <g class="walk-sketch-grid">
+      {[1, 2, 3].map((n) => <line x1={(box.width / 4) * n} y1="0" x2={(box.width / 4) * n} y2={box.height} />)}
+      {[1, 2].map((n) => <line x1="0" y1={(box.height / 3) * n} x2={box.width} y2={(box.height / 3) * n} />)}
+    </g>
+    <path class="walk-sketch-route" d={path} />
+    {
+      points.map((p, i) => (
+        <g class="walk-sketch-stop">
+          <circle cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r="7" />
+          <text x={p.x.toFixed(1)} y={(p.y + 3.3).toFixed(1)} text-anchor="middle">
+            {i + 1}
+          </text>
+        </g>
+      ))
+    }
+    <g class="walk-sketch-north" transform={`translate(${box.width - 16} 18)`}>
+      <path d="M0 -10 L4 4 L0 1 L-4 4 Z" />
+      <text y="13" text-anchor="middle">N</text>
+    </g>
+  </svg>
+  <p class="walk-stats walk-card-stats">
+    {stats.stopCount} stops · about {km} km · about {stats.minutes} minutes
+  </p>
+  <a class="btn btn-primary" href={href}>Start this walk<span class="sr-only">: {walk.name}</span></a>
+</li>
